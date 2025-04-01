@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  DRIVER
+}
+
+enum RideStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  MOBILE_MONEY
+  BANK_CARD
+  DIGITAL_WALLET
+}
+
+enum VehicleType {
+  CABLE_CAR
+  E_BIKE
+  E_SCOOTER
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+}
+
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String         @unique
+  phone        String?
+  password     String
+  role         UserRole       @default(USER)
+  createdAt    DateTime       @default(now())
+  rides        Ride[]
+  payments     Payment[]
+  driveRequest Boolean        @default(false)
+  vehicles     Vehicle[]      @relation("UserVehicles")
+  activeDriver VehicleDriver?
+}
+
+model Vehicle {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  type          VehicleType
+  name          String
+  plateNumber   String
+  status        VehicleStatus
+  createdAt     DateTime        @default(now())
+  user          User?           @relation("UserVehicles", fields: [userId], references: [id])
+  userId        String?         @db.ObjectId
+  rides         Ride[]          @relation(fields: [], references: [])
+  VehicleDriver VehicleDriver[]
+}
+
+model VehicleDriver {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @db.ObjectId
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId String   @db.ObjectId
+  latitude  Float
+  longitude Float
+  updatedAt DateTime @updatedAt
+}
+
+model Ride {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  user          User       @relation(fields: [userId], references: [id])
+  userId        String     @db.ObjectId
+  vehicle       Vehicle    @relation(fields: [vehicleId], references: [id])
+  vehicleId     String     @db.ObjectId
+  startTime     DateTime   @default(now())
+  endTime       DateTime? // Nullable for ongoing rides
+  fare          Float
+  status        RideStatus
+  startLocation String
+  endLocation   String
+  payment       Payment?   @relation("RidePayment")
+
+  @@index([userId, vehicleId])
+}
+
+model Payment {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  user      User          @relation(fields: [userId], references: [id])
+  userId    String        @db.ObjectId
+  ride      Ride          @relation("RidePayment", fields: [rideId], references: [id])
+  rideId    String        @unique @db.ObjectId
+  amount    Float
+  method    PaymentMethod
+  createdAt DateTime      @default(now())
+
+  @@unique([rideId, userId])
+  @@index([userId, rideId])
+}
