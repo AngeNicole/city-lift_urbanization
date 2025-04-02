@@ -1,5 +1,5 @@
 ## This is a monorepo that consists (frontend and backend)
---
+---
 ## **CityLift Connect - Frontend**
 A modern frontend for **CityLift Connect**, built with **React, Vite, TypeScript, TailwindCSS, and React Query**, using **Bun** as the package manager.
 
