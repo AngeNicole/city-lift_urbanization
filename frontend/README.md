@@ -2,8 +2,8 @@ Here's the updated README with **Bun** as the package manager. 🚀
 
 ---
 
-## **Lift City Connect - Client**
-A modern frontend for **Lift City Connect**, built with **React, Vite, TypeScript, TailwindCSS, and React Query**, using **Bun** as the package manager.
+## **CityLift Connect - Frontend**
+A modern frontend for **CityLift Connect**, built with **React, Vite, TypeScript, TailwindCSS, and React Query**, using **Bun** as the package manager.
 
 ### **🚀 Getting Started**
 ### **Prerequisites**
@@ -14,8 +14,8 @@ A modern frontend for **Lift City Connect**, built with **React, Vite, TypeScrip
 ### **📦 Installation**
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/ishgervais/lift-city-connect-client.git
-   cd lift-city-connect-client
+   git clone https://github.com/AngeNicole/city-lift_urbanization.git
+   cd frontend
    ```
 
 2. **Install dependencies using Bun**
@@ -73,7 +73,7 @@ A modern frontend for **Lift City Connect**, built with **React, Vite, TypeScrip
   ```
 
 ### **🌎 API Integration**
-The app interacts with the **Lift City Connect API**, hosted at:
+The app interacts with the **CityLift Connect API**, hosted at:
 ```
 https://lift-city-connect-server.onrender.com/api
 ```

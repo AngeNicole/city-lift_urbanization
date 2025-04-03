@@ -17,8 +17,8 @@ This backend is built using **Node.js (Express)** with **MongoDB (Prisma ORM)** 
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/your-repo/citylift-connect-backend.git
-cd citylift-connect-backend
+git clone https://github.com/AngeNicole/city-lift_urbanization.git
+cd backend
 ```
 
 ### 2️⃣ Install Dependencies
